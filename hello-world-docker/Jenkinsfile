@@ -23,7 +23,7 @@ pipeline {
     }
       steps {
         script {
-          sh "helm install  hello-world ./hello-world-helm"
+          sh "helm upgrade  hello-world ./hello-world-helm --set image.tag=0.${env.BUILD_NUMBER}"
         }
       }
     }
