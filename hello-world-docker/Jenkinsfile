@@ -18,9 +18,12 @@ pipeline {
       }
     }
     stage('Deploy kubernetes via helm') {
+    environment {
+        KUBECONFIG = credentials('kubeconfig')
+    }
       steps {
         script {
-          sh "cd hello-world-helm; helm install"
+          sh "helm install  hello-world ./hello-world-helm"
         }
       }
     }
