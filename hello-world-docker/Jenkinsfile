@@ -13,7 +13,7 @@ pipeline {
     stage('Push docker image to registry') {
       steps {
         script {
-          sh "docker push ${dockerRegistry}/${appName}:0.${env.BUILD_NUMBER}"
+          sh "docker push ${dockerRegistry}/${appName}:0.${env.BUILD_NUMBER}" .
         }
       }
     }
