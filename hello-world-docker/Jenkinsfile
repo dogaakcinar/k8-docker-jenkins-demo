@@ -1,0 +1,28 @@
+def dockerRegistry = "10.132.0.3:5000"
+def appName = "hello-world"
+pipeline {
+  agent any
+  stages {
+    stage('Docker build & tag ') {
+      steps {
+        script {
+          sh "cd hello-world-docker; docker build -t ${dockerRegistry}/${appName}:0.${env.BUILD_NUMBER} "
+        }
+      }
+    }
+    stage('Push docker image to registry') {
+      steps {
+        script {
+          sh "docker push ${dockerRegistry}/${appName}:0.${env.BUILD_NUMBER}"
+        }
+      }
+    }
+    stage('Deploy kubernetes via helm') {
+      steps {
+        script {
+          sh "cd hello-world-helm; helm install"
+        }
+      }
+    }
+  }
+}
