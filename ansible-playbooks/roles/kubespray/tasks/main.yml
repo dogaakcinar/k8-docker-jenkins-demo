@@ -1,0 +1,15 @@
+---
+- name: checkout kubespray
+  ansible.builtin.git:
+    repo: 'https://github.com/kubernetes-sigs/kubespray.git'
+    dest: "{{kubespray_dir}}"
+    version: master
+
+- name: Copy inventory to cluster folder
+  ansible.builtin.copy:
+    src: "{{kubespray_dir}}/inventory/sample"
+    dest: "{{kubespray_dir}}/inventory/{{cluster_name}}"
+
+- name: Install requirements for pip
+  pip:
+    requirements: "{{kubespray_dir}}/requirements.txt"

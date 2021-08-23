@@ -1,0 +1,64 @@
+---
+- name: Update the apt package index
+  become: yes
+  apt:
+    name: "*"
+    state: latest
+    update_cache: yes
+    force_apt_get: yes
+- name: Install packages for apt add repository over HTTPS
+  become: yes
+  apt:
+    name: "{{ packagesdep }}"
+    force_apt_get: yes
+    state: latest
+    update_cache: yes
+  vars:
+    packagesdep:
+    - git
+    - apt-transport-https
+    - ca-certificates
+    - wget
+    - software-properties-common
+    - gnupg2
+    - curl
+- name: Add Apt signing key from official docker repo
+  become: yes
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+- name: add docker official repository for Debian Stretch
+  become: yes
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/debian stretch stable
+    state: present
+- name: Index new repo into the cache
+  become: yes
+  apt:
+    name: "*"
+    state: latest
+    update_cache: yes
+    force_apt_get: yes
+- name: actually install docker
+  become: yes
+  apt:
+    name: "docker-ce"
+    state: latest
+- name: install pip
+  become: yes
+  apt:
+    name: "python3-pip"
+
+- name: Install docker python package
+  pip:
+      name: docker
+
+- name: docker registry
+  tags: container running
+  docker_container:
+      name: registry
+      image: registry:2
+      state: started
+      ports:
+      - "5000:5000"
+  

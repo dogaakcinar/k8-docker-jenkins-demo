@@ -1,0 +1,30 @@
+all:
+  hosts:
+    node1:
+      ansible_host: remoteip1
+      ip: localip1
+      access_ip: remoteip1
+    node2:
+      ansible_host: remoteip2
+      ip: localip2 
+      access_ip: remoteip2
+    node3:
+      ansible_host: remoteip3
+      ip: localip2
+      access_ip: remoteip3
+  children:
+    kube-master:
+      hosts:
+        node1:
+    kube-node:
+      hosts:
+        node2:
+    etcd:
+      hosts:
+        node1:
+    k8s-cluster:
+      children:
+        kube-master:
+        kube-node:
+    calico-rr:
+      hosts: {}

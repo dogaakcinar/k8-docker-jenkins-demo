@@ -1,0 +1,4 @@
+- name: Build Infra
+  community.general.terraform:
+    project_path: '{{project_path}}'
+    state: present
