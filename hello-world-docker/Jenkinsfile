@@ -6,14 +6,14 @@ pipeline {
     stage('Docker build & tag ') {
       steps {
         script {
-          sh "cd hello-world-docker; docker build -t ${dockerRegistry}/${appName}:0.${env.BUILD_NUMBER} "
+          sh "cd hello-world-docker; docker build -t ${dockerRegistry}/${appName}:0.${env.BUILD_NUMBER} ."
         }
       }
     }
     stage('Push docker image to registry') {
       steps {
         script {
-          sh "docker push ${dockerRegistry}/${appName}:0.${env.BUILD_NUMBER} . " 
+          sh "docker push ${dockerRegistry}/${appName}:0.${env.BUILD_NUMBER}  " 
         }
       }
     }
