@@ -11,7 +11,7 @@
 
 #### Prerequisites
 
-* To follow this tutorial you need Python , [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) installed on your localhost and a Google Cloud Platform Account.
+* To follow this tutorial you need Python, [Terraform](https://www.terraform.io/downloads.html) , [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) installed on your localhost and a Google Cloud Platform Account.
 
 
 # Installation Steps
